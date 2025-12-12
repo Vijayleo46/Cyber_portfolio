@@ -4,6 +4,8 @@ export interface Project {
   technologies: string[];
   features: string[];
   image: string;
+  demoUrl?: string;
+  githubUrl?: string;
 }
 
 export interface Experience {
@@ -23,6 +25,9 @@ export interface Education {
 export interface SkillItem {
   name: string;
   logo: string;
+  level?: number;
+  desc?: string;
+  link?: string;
 }
 
 export interface SkillCategory {
@@ -36,4 +41,6 @@ export interface ContactInfo {
   location: string;
   linkedin: string;
   github: string;
+  twitter?: string;
+  dribbble?: string;
 }

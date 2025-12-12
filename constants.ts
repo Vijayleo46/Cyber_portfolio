@@ -7,6 +7,8 @@ export const CONTACT_INFO: ContactInfo = {
   location: "Kochi, Kerala, India",
   linkedin: "https://linkedin.com/in/vijay-martin-86b430232",
   github: "https://github.com/Vijayleo46",
+  twitter: "https://twitter.com/vijaymartin",
+  dribbble: "https://dribbble.com/vijaymartin",
 };
 
 export const ABOUT_ME = `I am a Flutter Developer and Full-Stack Software Engineer with expertise in Dart, Flutter, Python, and modern web technologies. With hands-on experience from Spectrum Software Solutions, I specialize in building cross-platform mobile applications and scalable web solutions. I excel in collaborative environments, bringing innovative ideas to life while taking ownership of complex technical challenges. I am passionate about creating seamless user experiences across mobile and web platforms.`;
@@ -17,45 +19,58 @@ export const SKILLS: SkillCategory[] = [
   {
     name: "Languages",
     skills: [
-      { name: "Python", logo: getLogo("python") },
-      { name: "Dart", logo: getLogo("dart") },
-      { name: "C++", logo: getLogo("cplusplus") },
-      { name: "Java", logo: getLogo("java") },
-      { name: "JavaScript", logo: getLogo("javascript") },
-      { name: "SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+      { name: "Python", logo: getLogo("python"), level: 90, desc: "Expert in Django, Flask, AI/ML libraries, and automation scripts." },
+      { name: "Dart", logo: getLogo("dart"), level: 88, desc: "Advanced Flutter development with state management and native integrations." },
+      { name: "C++", logo: getLogo("cplusplus"), level: 75, desc: "Strong foundation in algorithms, data structures, and system programming." },
+      { name: "Java", logo: getLogo("java"), level: 70, desc: "Object-oriented programming and Android development experience." },
+      { name: "JavaScript", logo: getLogo("javascript"), level: 85, desc: "Modern ES6+, async programming, and full-stack JavaScript development." },
+      { name: "SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", level: 80, desc: "Database design, complex queries, optimization, and stored procedures." },
     ],
   },
   {
     name: "Frameworks & Tech",
     skills: [
-      { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-      { name: "Flutter", logo: getLogo("flutter") },
-      { name: "React", logo: getLogo("react") },
-      { name: "Next.js", logo: getLogo("nextjs") },
-      { name: "Node.js", logo: getLogo("nodejs") },
-      { name: "Three.js", logo: getLogo("threejs") },
-      { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+      { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg", level: 88, desc: "Full-stack web development with REST APIs, authentication, and deployment." },
+      { name: "Flutter", logo: getLogo("flutter"), level: 92, desc: "Cross-platform mobile apps with Firebase, state management, and native features." },
+      { name: "React", logo: getLogo("react"), level: 87, desc: "Modern React with hooks, context, and component-based architecture." },
+      { name: "Next.js", logo: getLogo("nextjs"), level: 82, desc: "Server-side rendering, static generation, and API routes for production apps." },
+      { name: "Node.js", logo: getLogo("nodejs"), level: 83, desc: "Backend APIs, Express.js, real-time applications, and microservices." },
+      { name: "Three.js", logo: getLogo("threejs"), level: 72, desc: "3D graphics, WebGL, interactive visualizations, and animations." },
+      { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", level: 90, desc: "Utility-first CSS, responsive design, and custom component styling." },
     ],
   },
   {
     name: "Databases & Cloud",
     skills: [
-      { name: "Supabase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" },
-      { name: "MySQL", logo: getLogo("mysql") },
-      { name: "SQLite", logo: getLogo("sqlite") },
-      { name: "Firebase", logo: getLogo("firebase") },
+      { name: "Supabase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg", level: 85, desc: "PostgreSQL backend, real-time subscriptions, authentication, and storage." },
+      { name: "MySQL", logo: getLogo("mysql"), level: 82, desc: "Relational database design, indexing, transactions, and performance tuning." },
+      { name: "SQLite", logo: getLogo("sqlite"), level: 78, desc: "Embedded databases for mobile and desktop applications." },
+      { name: "Firebase", logo: getLogo("firebase"), level: 88, desc: "Real-time database, authentication, cloud functions, and hosting." },
     ],
   },
   {
     name: "Tools",
     skills: [
-      { name: "Git", logo: getLogo("git") },
-      { name: "Figma", logo: getLogo("figma") },
+      { name: "Git", logo: getLogo("git"), level: 90, desc: "Version control, branching strategies, collaboration, and CI/CD workflows." },
+      { name: "Figma", logo: getLogo("figma"), level: 80, desc: "UI/UX design, prototyping, design systems, and developer handoff." },
     ],
   },
 ];
 
 export const PROJECTS: Project[] = [
+  {
+    title: "Future Assistant",
+    description: "AI-Powered Virtual Assistant with Voice Recognition.",
+    technologies: ["Python", "AI", "Speech Recognition", "NLP"],
+    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=2006&auto=format&fit=crop",
+    demoUrl: "https://future-assistant.vercel.app/",
+    githubUrl: "https://github.com/Vijayleo46/Future-Assistant",
+    features: [
+      "Voice-activated AI assistant with natural language processing.",
+      "Performs tasks like web searches, weather updates, and automation.",
+      "Live demo available with interactive voice commands.",
+    ],
+  },
   {
     title: "MindCanvas",
     description: "Time Memory Engine & Prediction System.",

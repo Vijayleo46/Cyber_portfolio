@@ -1,236 +1,209 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CONTACT_INFO } from '../constants';
-import { Mail, Github, Linkedin, MapPin, Send, ArrowRight, ExternalLink, Code2, Sparkles, Rocket, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Mail, Github, Linkedin, MapPin, ArrowUpRight, FileText, Sun, Moon } from 'lucide-react';
+import { motion, useAnimation, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const Footer: React.FC = () => {
-  const services = [
-    { icon: Code2, title: 'Full-Stack Development', desc: 'Building scalable web applications' },
-    { icon: Sparkles, title: 'AI Integration', desc: 'Implementing intelligent solutions' },
-    { icon: Rocket, title: 'Mobile Apps', desc: 'Cross-platform Flutter development' }
+  const links = [
+    { name: 'Portfolio', href: '#projects' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Contact', href: '#contact' }
   ];
 
+  const socialLinks = [
+    { name: 'Email', icon: Mail, href: `mailto:${CONTACT_INFO.email}` },
+    { name: 'LinkedIn', icon: Linkedin, href: CONTACT_INFO.linkedin },
+    { name: 'GitHub', icon: Github, href: CONTACT_INFO.github }
+  ];
+
+  const prefersReducedMotion = useReducedMotion();
+  const controls = useAnimation();
+  const [downloading, setDownloading] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    // entrance sequence
+    if (!prefersReducedMotion) controls.start('visible');
+    else controls.set('visible');
+  }, [controls, prefersReducedMotion]);
+
+  // small micro-interaction for CV
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (downloading) return;
+    setDownloading(true);
+    if (!prefersReducedMotion) await controls.start({ scale: [1, 0.98, 1.02, 1], transition: { duration: 0.45 } });
+    // replace with real resume file in /public
+    setTimeout(() => setDownloading(false), 1200);
+  };
+
+  // motion variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.06, when: 'beforeChildren' } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 8 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 16 } }
+  };
+
+  const socialHover = { scale: 1.12, rotate: 8 };
+
+  // decorative morphing blob path states (2 shapes)
+  const blobA = 'M60,-64.2C77.4,-53.6,86.6,-32.7,86.6,-14.1C86.6,4.5,77.4,20.8,64,33.1C50.6,45.3,33,53.6,14.3,61.8C-4.4,70,-23.2,78.2,-38.3,72.7C-53.5,67.2,-64,47,-71.1,26.1C-78.2,5.2,-82.9,-16.2,-74.8,-34.5C-66.7,-52.9,-45.9,-68.2,-24.1,-74.1C-2.4,-80,19.4,-76.6,37.8,-68.9C56.3,-61.3,77.4,-53.6,60,-64.2Z';
+  const blobB = 'M46.3,-51.4C60.2,-40.9,69.1,-25.3,74,-6.9C78,11.5,77.9,33.8,67.6,46.3C57.3,58.8,36.8,61.6,17.2,64.9C-2.4,68.3,-21.8,72.1,-35.6,64.5C-49.3,56.9,-57.6,37.8,-63.7,17.8C-69.9,-2.2,-73.8,-23.2,-66.7,-37.8C-59.6,-52.4,-41.6,-60.5,-23.3,-67.2C-5,-73.9,13.7,-79.1,29.7,-72.8C45.6,-66.6,32.4,-62,46.3,-51.4Z';
+
   return (
-    <footer id="contact" className="relative bg-gradient-to-b from-black via-slate-950 to-black pt-32 pb-12 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 15, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 18, repeat: Infinity, delay: 2 }}
-        />
+    <motion.footer
+      id="contact"
+      className={`relative overflow-hidden pt-24 pb-12 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-slate-900'}`}
+      initial="hidden"
+      animate={controls}
+      variants={containerVariants}
+      aria-label="Contact & footer"
+    >
+      {/* Decorative background: morphing svg blob + subtle grid */}
+      <div aria-hidden className="absolute inset-0 -z-10 pointer-events-none">
+        <svg viewBox="-100 -100 200 200" className="absolute -left-10 top-6 w-[36rem] h-[36rem] opacity-20" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="gFooter" x1="0" x2="1">
+              <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.25" />
+            </linearGradient>
+          </defs>
+
+          <motion.path
+            d={blobA}
+            fill="url(#gFooter)"
+            transform="translate(0,0) scale(0.9)"
+            animate={{ d: [blobA, blobB, blobA] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </svg>
+
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 to-transparent" />
+
+        <div className="absolute right-8 bottom-20 hidden lg:block">
+          <div className="w-36 h-36 rounded-full blur-3xl mix-blend-screen" style={{ background: 'linear-gradient(90deg,#ec4899aa,#7c3aedaa)' }} />
+        </div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-black text-white mb-6"
-            style={{ fontFamily: "'Bebas Neue', 'Impact', 'Arial Black', sans-serif" }}
-          >
-            LET'S BUILD{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-600">
-              SOMETHING AMAZING
-            </span>
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-slate-300 text-lg max-w-2xl mx-auto"
-          >
-            Ready to transform your ideas into reality? Let's collaborate on your next project.
-          </motion.p>
-        </div>
+        <motion.div className="grid md:grid-cols-2 gap-16 mb-20">
+          <motion.div variants={itemVariants}>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+              Let's build something
+              <br />beautiful together
+            </h2>
+            <p className="text-slate-400 max-w-md mb-6">Available for freelance projects, collaborations, and full-time roles. I bring UI + frontend engineering + AI experience.</p>
 
-
-
-        {/* Services Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-            Our Latest{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">
-              Services
-            </span>
-          </h3>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {services.map((service, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.15 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-gradient-to-br from-purple-900/30 to-indigo-900/30 backdrop-blur-sm border border-purple-500/30 rounded-3xl p-8 overflow-hidden"
+            <div className="flex items-center gap-4">
+              <motion.a
+                href={`mailto:${CONTACT_INFO.email}`}
+                whileHover={{ x: 6 }}
+                className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg"
               >
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                
-                <div className="relative z-10">
-                  <motion.div
-                    className="w-16 h-16 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mb-6"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <service.icon size={32} className="text-white" />
-                  </motion.div>
-                  
-                  <h4 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-indigo-400 transition-all">
-                    {service.title}
-                  </h4>
-                  
-                  <p className="text-slate-400 mb-6">{service.desc}</p>
-                  
-                  <motion.button
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-2 text-purple-400 font-semibold text-sm group-hover:text-purple-300"
-                  >
-                    Learn More <ArrowRight size={16} />
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                Contact Me
+                <ArrowUpRight size={16} />
+              </motion.a>
 
-        {/* Contact CTA Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative bg-gradient-to-r from-purple-900/40 via-indigo-900/40 to-purple-900/40 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-12 mb-20 overflow-hidden"
-        >
-          {/* Animated Background */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-indigo-600/10"
-            animate={{
-              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-            }}
-            transition={{ duration: 10, repeat: Infinity }}
-            style={{ backgroundSize: '200% 200%' }}
-          />
-          
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-center md:text-left">
-              <h3 className="text-3xl md:text-4xl font-black text-white mb-4">
-                Ready to Start Your Project?
-              </h3>
-              <p className="text-slate-300 text-lg max-w-xl">
-                Get in touch and let's discuss how we can bring your vision to life with cutting-edge technology.
-              </p>
+              <motion.button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-white/6 backdrop-blur-sm border border-white/6 text-sm"
+                whileHover={{ scale: 1.03 }}
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                <span className="text-sm">{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
+              </motion.button>
             </div>
-            
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-12">
+            <div>
+              <h3 className="font-semibold mb-5 text-sm uppercase tracking-wider">Quick links</h3>
+              <ul className="space-y-3">
+                {links.map((link, idx) => (
+                  <li key={idx}>
+                    <motion.a
+                      href={link.href}
+                      className="flex items-center justify-between w-full text-slate-400 hover:text-white transition-colors"
+                      whileHover={!prefersReducedMotion ? { x: 6 } : undefined}
+                    >
+                      <span>{link.name}</span>
+                      <span className="text-xs text-slate-500">→</span>
+                    </motion.a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-5 text-sm uppercase tracking-wider">Connect</h3>
+              <ul className="space-y-3">
+                {socialLinks.map((social, idx) => {
+                  const Icon = social.icon;
+                  return (
+                    <li key={idx} className="flex items-center">
+                      <motion.a
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group"
+                        whileHover={!prefersReducedMotion ? socialHover : undefined}
+                      >
+                        <span className="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center text-sm">
+                          <Icon size={14} />
+                        </span>
+                        <div className="flex-1">
+                          <div className="text-sm">{social.name}</div>
+                          <div className="text-xs text-slate-500">{social.href.replace(/(^\w+:|^)\/\//, '')}</div>
+                        </div>
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                      </motion.a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="h-px bg-white/6 mb-10" />
+
+        <motion.div className="flex flex-col md:flex-row items-center justify-between gap-6" variants={containerVariants}>
+          <motion.div variants={itemVariants} className="flex items-center gap-4">
+            <div className="text-lg font-bold">Vijay Martin</div>
+            <div className="text-sm text-slate-500">© {new Date().getFullYear()}</div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="flex items-center gap-6">
+            <div className="flex items-center gap-2 text-slate-400 text-sm">
+              <MapPin size={14} />
+              <span>{CONTACT_INFO.location}</span>
+            </div>
+
             <motion.a
-              href={`mailto:${CONTACT_INFO.email}`}
-              whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(168, 85, 247, 0.6)' }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg whitespace-nowrap"
+              href="#"
+              onClick={handleDownload}
+              className="inline-flex items-center gap-3 px-4 py-2 text-sm rounded-full bg-white/3 border border-white/6"
+              whileHover={!prefersReducedMotion ? { scale: 1.04 } : undefined}
+              aria-busy={downloading}
             >
-              <Send size={24} />
-              Contact Me
-              <ExternalLink size={20} />
+              <FileText size={14} />
+              <span>{downloading ? 'Preparing...' : 'Download CV'}</span>
             </motion.a>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center gap-4 mb-12"
-        >
-          {[
-            { icon: Mail, href: `mailto:${CONTACT_INFO.email}`, color: 'from-purple-600 to-indigo-600' },
-            { icon: Linkedin, href: CONTACT_INFO.linkedin, color: 'from-blue-600 to-cyan-600' },
-            { icon: Github, href: CONTACT_INFO.github, color: 'from-slate-700 to-slate-900' },
-          ].map((social, idx) => (
-            <motion.a
-              key={idx}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.15, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className={`w-14 h-14 flex items-center justify-center rounded-2xl bg-gradient-to-br ${social.color} text-white shadow-lg border border-white/10`}
-            >
-              <social.icon size={24} />
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Location Badge */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-900/30 to-indigo-900/30 backdrop-blur-sm border border-purple-500/30 px-6 py-3 rounded-full">
-            <MapPin size={18} className="text-purple-400" />
-            <span className="text-slate-300 font-medium">{CONTACT_INFO.location}</span>
-          </div>
-        </motion.div>
-
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="pt-8 border-t border-purple-500/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500"
-        >
-          <div className="flex items-center gap-2">
-            <span>© {new Date().getFullYear()} Vijay Martin.</span>
-            <span>All rights reserved.</span>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <span>Crafted with</span>
-            <motion.span
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-purple-400"
-            >
-              ❤️
-            </motion.span>
-            <span>using React & Tailwind</span>
-          </div>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="text-center mt-10 pt-6">
+          <p className="text-xs text-slate-500">Built with React, TypeScript & Tailwind CSS • Crafted with ♥︎</p>
         </motion.div>
       </div>
 
-      {/* Bottom Accent Line */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600"
-        animate={{
-          backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-        }}
-        transition={{ duration: 5, repeat: Infinity }}
-        style={{ backgroundSize: '200% 200%' }}
-      />
-    </footer>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+    </motion.footer>
   );
 };
 
