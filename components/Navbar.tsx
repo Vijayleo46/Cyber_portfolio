@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -12,130 +18,180 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useGSAP(() => {
+    // Navbar slide down and flicker boot
+    const tl = gsap.timeline();
+    tl.fromTo(navRef.current,
+      { y: -100, opacity: 0, filter: "brightness(0)" },
+      { y: 0, opacity: 1, filter: "brightness(1.5)", duration: 0.8, ease: "power4.out" }
+    ).to(navRef.current, { filter: "brightness(1)", duration: 0.4 });
+
+    // Initial links stagger with glitch effect
+    if (linksRef.current) {
+      gsap.from(linksRef.current.children, {
+        x: -10,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        delay: 0.8,
+        ease: "power2.out"
+      });
+    }
+
+    // Logo pulsing emerald
+    gsap.to(".logo-dot", {
+      opacity: 0.4,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
+  }, { scope: navRef });
+
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'HOME', href: '#home', code: '01' },
+    { name: 'SKILLS', href: '#skills', code: '02' },
+    { name: 'EXPERIENCE', href: '#experience', code: '03' },
+    { name: 'PROJECTS', href: '#projects', code: '04' },
   ];
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300 ${isScrolled ? 'pt-4' : 'pt-6'}`}
+      <nav
+        ref={navRef}
+        className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center transition-all duration-500 ${isScrolled ? 'pt-2' : 'pt-4'}`}
       >
+        {/* Top Slim HUD Line */}
+        <div className="w-full max-w-7xl h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent mb-1 opacity-50" />
+
         <div
           className={`
-            flex items-center justify-between px-6 py-3 rounded-full 
-            ${isScrolled ? 'bg-dark-200/90 backdrop-blur-xl border border-dark-100 shadow-2xl w-full max-w-5xl' : 'bg-transparent w-full max-w-7xl'}
-            transition-all duration-500
+            flex items-center justify-between px-8 py-3 rounded-xl
+            ${isScrolled
+              ? 'bg-black/60 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)] w-full max-w-6xl'
+              : 'bg-emerald-500/[0.02] backdrop-blur-md border border-white/5 w-full max-w-7xl'}
+            transition-all duration-700
           `}
         >
-          {/* Logo */}
-          <motion.a
-            href="#"
-            className="text-xl font-bold text-white tracking-tighter hover:text-indigo-400 transition-colors flex items-center gap-1"
-            whileHover={{ scale: 1.1, rotate: 2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            VM<span className="text-indigo-500">.</span>
-            <motion.div
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
-              animate={{ y: [0, -4, 0] }}
-              transition={{ repeat: Infinity, duration: 1.2 }}
-            />
-          </motion.a>
+          {/* Logo / System ID */}
+          <div className="flex items-center gap-6">
+            <a
+              ref={logoRef}
+              href="#"
+              className="group flex flex-col items-start"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-black text-white tracking-[0.2em] group-hover:text-emerald-400 transition-colors">
+                  V_MARTIN
+                </span>
+                <div className="logo-dot w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+              </div>
+              <span className="text-[8px] font-mono text-emerald-500/40 uppercase tracking-[0.5em] -mt-1">System Core v4.2</span>
+            </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-2 bg-dark-300/60 rounded-full px-2 py-1 border border-white/5 backdrop-blur-md">
-            {navLinks.map((link, idx) => (
-              <motion.a
+            {/* System Status Decorative Icons (Desktop) */}
+            <div className="hidden lg:flex items-center gap-4 pl-6 border-l border-white/10 opacity-40">
+              <div className="flex gap-1">
+                {[1, 2, 3, 4].map(i => <div key={i} className={`w-1 h-3 rounded-full ${i < 4 ? 'bg-emerald-500' : 'bg-white/20'}`} />)}
+              </div>
+              <span className="text-[9px] font-mono text-emerald-500 tracking-widest uppercase">Signal: High</span>
+            </div>
+          </div>
+
+          {/* Desktop HUD Nav Links */}
+          <div ref={linksRef} className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <a
                 key={link.name}
                 href={link.href}
-                className="px-5 py-2 text-sm font-medium text-slate-300 relative overflow-hidden rounded-full"
-                whileHover={{ scale: 1.05 }}
+                className="group px-6 py-2 flex flex-col items-center relative"
               >
-                {link.name}
-                <motion.span
-                  className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400"
-                  initial={{ width: 0 }}
-                  whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                />
-              </motion.a>
+                <span className="text-[8px] font-mono text-emerald-500/40 group-hover:text-emerald-400/60 transition-colors">[{link.code}]</span>
+                <span className="text-[11px] font-black tracking-[0.2em] text-slate-400 group-hover:text-white transition-all uppercase">
+                  {link.name}
+                </span>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-emerald-500 group-hover:w-1/2 transition-all duration-300 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+              </a>
             ))}
           </div>
 
-          {/* CTA Button */}
-          <motion.a
-            href="#contact"
-            className="hidden md:inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg hover:shadow-indigo-500/50 transition-all"
-            whileHover={{ scale: 1.05, y: -2, boxShadow: '0px 0px 20px rgba(99,102,241,0.6)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Contact
-          </motion.a>
+          {/* Right Section: Time + CTA */}
+          <div className="flex items-center gap-8">
+            {/* Real-time Clock */}
+            <div className="hidden xl:flex flex-col items-end pr-6 border-r border-white/10">
+              <span className="text-[10px] font-mono text-emerald-400/80 tracking-widest">{currentTime}</span>
+              <span className="text-[7px] font-mono text-emerald-500/30 uppercase tracking-[0.3em]">Synchronized</span>
+            </div>
 
-          {/* Mobile Toggle */}
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex items-center justify-center md:hidden"
-          >
-            <motion.div
-              className="flex flex-col gap-8 text-center"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.1 } },
-              }}
+            <a
+              href="#contact"
+              className="group relative px-8 py-2.5 bg-emerald-500 text-black font-black text-[11px] uppercase tracking-[0.2em] rounded-sm overflow-hidden transition-all hover:bg-white hover:scale-105"
             >
-              {navLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  className="text-3xl font-bold text-white hover:text-indigo-400 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#contact"
-                className="text-xl font-bold text-indigo-400 mt-4"
+              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
+              <span className="relative z-10">Initialize_Contact</span>
+            </a>
+
+            {/* Mobile Toggle */}
+            <button
+              className="md:hidden text-emerald-500 p-2 hover:bg-emerald-500/10 rounded-lg transition-colors"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Decorative HUD Corner (Desktop) */}
+        <div className="w-full max-w-6xl flex justify-between px-2 -mt-1 opacity-20 pointer-events-none hidden md:flex">
+          <div className="w-4 h-4 border-l border-b border-emerald-500" />
+          <div className="w-4 h-4 border-r border-b border-emerald-500" />
+        </div>
+      </nav>
+
+      {/* Mobile Menu - Futuristic Glitch Style */}
+      {isOpen && (
+        <div
+          ref={mobileMenuRef}
+          className="fixed inset-0 bg-black/95 backdrop-blur-3xl z-40 flex items-center justify-center md:hidden"
+        >
+          {/* Background Grid for Mobile Menu */}
+          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#10b981_1px,transparent_1px),linear-gradient(to_bottom,#10b981_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+          <div className="relative z-10 flex flex-col gap-10 text-center">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="mobile-link group flex flex-col items-center"
                 onClick={() => setIsOpen(false)}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
               >
-                Get in Touch
-              </motion.a>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <span className="text-[10px] font-mono text-emerald-500/40 group-hover:text-emerald-400">00{link.code}</span>
+                <span className="text-4xl font-black text-white hover:text-emerald-400 transition-colors uppercase tracking-[0.1em]">
+                  {link.name}
+                </span>
+              </a>
+            ))}
+            <a
+              href="#contact"
+              className="mobile-link text-xl font-bold text-emerald-400 mt-4 border border-emerald-400/30 px-8 py-3 rounded-full hover:bg-emerald-400 hover:text-black transition-all"
+              onClick={() => setIsOpen(false)}
+            >
+              INITIALIZE CONTACT
+            </a>
+          </div>
+        </div>
+      )}
     </>
   );
 };

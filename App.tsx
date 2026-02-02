@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -8,6 +9,7 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 
 function App() {
+
   useEffect(() => {
     // #region agent log
     fetch('http://127.0.0.1:7242/ingest/12665dff-7b7f-4a7e-9198-1ecad55a1eb0', {
@@ -24,7 +26,7 @@ function App() {
         },
         timestamp: Date.now(),
       }),
-    }).catch(() => {});
+    }).catch(() => { });
     fetch('http://127.0.0.1:7242/ingest/12665dff-7b7f-4a7e-9198-1ecad55a1eb0', {
       method: 'POST',
       mode: 'no-cors',
@@ -39,7 +41,7 @@ function App() {
         data: { fallback: true },
         timestamp: Date.now(),
       }),
-    }).catch(() => {});
+    }).catch(() => { });
     const sendBeaconFallback = (body: Record<string, unknown>) => {
       const url = 'http://127.0.0.1:7242/ingest/12665dff-7b7f-4a7e-9198-1ecad55a1eb0';
       try {
@@ -74,27 +76,36 @@ function App() {
   }, []);
 
   return (
-    <div className="relative bg-slate-950 min-h-screen text-slate-200 selection:bg-indigo-500/30 overflow-hidden">
-      {/* Ambient animated background */}
+    <div className="relative bg-[#020202] min-h-screen text-emerald-50 selection:bg-emerald-500/30 overflow-x-hidden">
+      {/* Cinematic OS Overlay */}
+      <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_2px,3px_100%]" />
+
+
+      {/* Ambient animated background - Cyber OS Atmosphere */}
       <div className="pointer-events-none fixed inset-0 -z-10">
+        {/* Deep Emerald Radial Glows */}
         <div
-          className="absolute inset-0 opacity-70"
+          className="absolute inset-0 opacity-40"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 28%), radial-gradient(circle at 80% 30%, rgba(236,72,153,0.1), transparent 30%), radial-gradient(circle at 40% 70%, rgba(56,189,248,0.12), transparent 32%)",
-            filter: "blur(32px)",
+              "radial-gradient(circle at 15% 15%, rgba(16,185,129,0.15), transparent 35%), radial-gradient(circle at 85% 85%, rgba(6,182,212,0.15), transparent 35%), radial-gradient(circle at 50% 50%, rgba(16,185,129,0.05), transparent 50%)",
+            filter: "blur(40px)",
           }}
         />
+
+        {/* Futuristic HUD Grid Overlay */}
         <div
-          className="absolute inset-0 opacity-[0.12] mix-blend-screen animate-[gridShift_16s_linear_infinite]"
+          className="absolute inset-0 opacity-[0.07] mix-blend-screen animate-[gridShift_20s_linear_infinite]"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)",
-            backgroundSize: "120px 120px",
-            maskImage: "radial-gradient(circle at 50% 50%, black 0%, black 45%, transparent 65%)",
+              "linear-gradient(to right, rgba(16,185,129,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(16,185,129,0.2) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+            maskImage: "radial-gradient(circle at 50% 50%, black 0%, black 40%, transparent 80%)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-white/[0.02]" />
+
+        {/* Floating Light Particles Overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(16,185,129,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20" />
       </div>
 
       <Navbar />
@@ -105,13 +116,15 @@ function App() {
       <Footer />
       <ChatBot />
 
-      {/* Keyframes for ambient grid shift */}
       <style>
         {`
           @keyframes gridShift {
-            0% { transform: translate3d(0,0,0); }
-            50% { transform: translate3d(-30px, -20px, 0); }
-            100% { transform: translate3d(0,0,0); }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(60px); }
+          }
+          ::selection {
+            background: rgba(16, 185, 129, 0.3);
+            color: #fff;
           }
         `}
       </style>
