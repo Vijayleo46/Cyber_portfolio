@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { EXPERIENCE } from '../constants';
+import React, { useRef, useState, useEffect } from 'react';
+import { portfolioApi } from '../api';
+import { Experience as ExperienceType } from '../types';
 import {
   Terminal,
   Calendar,
@@ -14,6 +15,17 @@ import { motion } from 'framer-motion';
 
 const Experience: React.FC = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [experience, setExperience] = useState<ExperienceType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    portfolioApi.getExperience()
+      .then(setExperience)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return null; // Or a themed loader
 
   return (
     <section id="experience" className="py-32 bg-transparent relative overflow-hidden">
@@ -34,8 +46,8 @@ const Experience: React.FC = () => {
 
         {/* Experience Stream */}
         <div className="max-w-4xl mx-auto space-y-12">
-          {EXPERIENCE.map((exp, idx) => {
-            const isLast = idx === EXPERIENCE.length - 1;
+          {experience.map((exp, idx) => {
+            const isLast = idx === experience.length - 1;
             return (
               <motion.div
                 key={idx}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PROJECTS } from '../constants';
+import { portfolioApi } from '../api';
+import { Project } from '../types';
 import { ExternalLink, Github, Rocket, Zap, Code2, Cpu, Globe, Terminal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -8,6 +9,15 @@ const Projects: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
   const projectsRef = useRef<HTMLDivElement>(null);
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    portfolioApi.getProjects()
+      .then(setProjects)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
 
   // Auto-scroll effect
   useEffect(() => {
@@ -86,7 +96,7 @@ const Projects: React.FC = () => {
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            {PROJECTS.map((project, idx) => (
+            {projects.map((project, idx) => (
               <motion.div
                 key={idx}
                 className="flex-shrink-0 w-[400px] snap-center group/card"

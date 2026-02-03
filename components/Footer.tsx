@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
-import { CONTACT_INFO } from '../constants';
+import React, { useState, useEffect } from 'react';
+import { portfolioApi } from '../api';
+import { ContactInfo } from '../types';
 import { Mail, Github, Linkedin, MapPin, Terminal, Cpu, Globe, ArrowUpRight, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
   const [downloading, setDownloading] = useState(false);
+  const [profile, setProfile] = useState<ContactInfo | null>(null);
 
-  const socialLinks = [
-    { name: 'Terminal_Mail', icon: Mail, href: `mailto:${CONTACT_INFO.email}`, label: 'SMTP_Ready' },
-    { name: 'Node_GitHub', icon: Github, href: CONTACT_INFO.github, label: 'GIT_Active' },
-    { name: 'Core_LinkedIn', icon: Linkedin, href: CONTACT_INFO.linkedin, label: 'PROF_Auth' }
-  ];
+  useEffect(() => {
+    portfolioApi.getContact()
+      .then(setProfile)
+      .catch(console.error);
+  }, []);
+
+  const socialLinks = profile ? [
+    { name: 'Terminal_Mail', icon: Mail, href: `mailto:${profile.email}`, label: 'SMTP_Ready' },
+    { name: 'Node_GitHub', icon: Github, href: profile.github, label: 'GIT_Active' },
+    { name: 'Core_LinkedIn', icon: Linkedin, href: profile.linkedin, label: 'PROF_Auth' }
+  ] : [];
 
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -48,7 +56,7 @@ const Footer: React.FC = () => {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <motion.a
-                href={`mailto:${CONTACT_INFO.email}`}
+                href={`mailto:${profile?.email || 'vijaymartin72@gmail.com'}`}
                 whileHover={{ scale: 1.05 }}
                 className="px-8 py-4 bg-emerald-500 text-black font-black uppercase text-xs rounded-full shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:bg-emerald-400 transition-colors"
               >

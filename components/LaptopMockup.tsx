@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Wifi, Battery, Bell, Search, Globe, Github, Linkedin, Twitter, Download } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { portfolioApi } from "../api";
+import { ContactInfo, Project } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +14,18 @@ const LaptopMockup: React.FC = () => {
     const nameRef = useRef<HTMLDivElement>(null);
     const photoRef = useRef<HTMLDivElement>(null);
     const [currentTime, setCurrentTime] = useState("");
+    const [profile, setProfile] = useState<ContactInfo | null>(null);
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        portfolioApi.getContact()
+            .then(setProfile)
+            .catch(console.error);
+
+        portfolioApi.getProjects()
+            .then(setProjects)
+            .catch(console.error);
+    }, []);
 
     useEffect(() => {
         const updateTime = () => {
@@ -158,7 +172,7 @@ const LaptopMockup: React.FC = () => {
                             {/* HEADER - Precisely as reference */}
                             <div className="main-ui-element text-center mb-4 pt-2">
                                 <span className="text-[10px] md:text-[12px] font-bold text-emerald-400 uppercase tracking-[0.6em] drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">
-                                    Software Developer
+                                    {profile?.job_title || "Software Developer"}
                                 </span>
                                 <h2
                                     ref={nameRef}
@@ -171,7 +185,7 @@ const LaptopMockup: React.FC = () => {
                                         filter: "drop-shadow(0 0 15px rgba(16,185,129,0.4))"
                                     }}
                                 >
-                                    VIJAY MARTIN
+                                    {profile?.name || "VIJAY MARTIN"}
                                 </h2>
                             </div>
 
@@ -185,7 +199,7 @@ const LaptopMockup: React.FC = () => {
                                             <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                                             <span className="text-[8px] md:text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Projects Completed:</span>
                                         </div>
-                                        <span className="text-2xl md:text-3xl font-black text-white">12</span>
+                                        <span className="text-2xl md:text-3xl font-black text-white">{projects.length || "12"}</span>
                                     </div>
                                     <div className="flex flex-col gap-1 border-l-2 border-emerald-500/20 pl-4">
                                         <div className="flex items-center gap-2">
@@ -264,13 +278,13 @@ const LaptopMockup: React.FC = () => {
                                         <div className="w-8 h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
                                             <Search className="w-4 h-4 text-emerald-500/60" />
                                         </div>
-                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">vijaymartin72@gmail.com</span>
+                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.email || "vijaymartin72@gmail.com"}</span>
                                     </div>
                                     <div className="flex items-center gap-3 group cursor-pointer">
                                         <div className="w-8 h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
                                             <Wifi className="w-4 h-4 text-emerald-500/60" />
                                         </div>
-                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">+91 773 647 2576</span>
+                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.phone || "+91 773 647 2576"}</span>
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-end gap-1">

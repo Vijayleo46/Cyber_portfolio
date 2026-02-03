@@ -1,9 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import LaptopMockup from "./LaptopMockup";
+import { portfolioApi } from "../api";
+import { ContactInfo } from "../types";
 
 const Hero: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [profile, setProfile] = useState<ContactInfo | null>(null);
+
+    useEffect(() => {
+        portfolioApi.getContact()
+            .then(setProfile)
+            .catch(console.error);
+    }, []);
+
+    const nameParts = profile?.name.split(' ') || ["VIJAY", "MARTIN"];
 
     return (
         <section
@@ -81,7 +92,7 @@ const Hero: React.FC = () => {
                     className="relative mb-6"
                 >
                     <span className="text-xs md:text-sm font-bold text-emerald-500/60 uppercase tracking-[0.8em]">
-                        Software Developer
+                        {profile?.job_title || "Software Developer"}
                     </span>
                     <div className="absolute -inset-x-4 h-[1px] bottom-0 bg-emerald-500/20" />
                 </motion.div>
@@ -103,7 +114,7 @@ const Hero: React.FC = () => {
                                 WebkitTextFillColor: "transparent"
                             }}
                         >
-                            VIJAY
+                            {nameParts[0]}
                         </h1>
                         <h1
                             className="text-7xl md:text-[10rem] font-black text-white leading-none tracking-tighter uppercase relative z-10 -mt-4 md:-mt-8"
@@ -114,14 +125,14 @@ const Hero: React.FC = () => {
                                 WebkitTextFillColor: "transparent"
                             }}
                         >
-                            MARTIN
+                            {nameParts.slice(1).join(' ')}
                         </h1>
                     </div>
 
                     {/* Retro Ghosting Effect behind H1 */}
                     <div className="absolute inset-0 -z-10 translate-x-2 translate-y-2 opacity-5 blur-[2px] pointer-events-none flex flex-col items-center">
-                        <span className="text-7xl md:text-[12rem] font-black text-emerald-500 tracking-tighter uppercase">VIJAY</span>
-                        <span className="text-7xl md:text-[10rem] font-black text-emerald-500 tracking-tighter uppercase -mt-4 md:-mt-8">MARTIN</span>
+                        <span className="text-7xl md:text-[12rem] font-black text-emerald-500 tracking-tighter uppercase">{nameParts[0]}</span>
+                        <span className="text-7xl md:text-[10rem] font-black text-emerald-500 tracking-tighter uppercase -mt-4 md:-mt-8">{nameParts.slice(1).join(' ')}</span>
                     </div>
 
                     {/* Technical Crosshairs around name */}

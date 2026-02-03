@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
-import { SKILLS } from "../constants";
+import React, { useRef, useState, useEffect } from "react";
+import { portfolioApi } from "../api";
+import { SkillCategory } from "../types";
 import LaptopMockup from "./LaptopMockup";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -12,6 +13,15 @@ gsap.registerPlugin(ScrollTrigger);
 const Skills: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const [skills, setSkills] = useState<SkillCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    portfolioApi.getSkills()
+      .then(setSkills)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
 
   const categoryIcons: Record<string, any> = {
     "Languages": Cpu,
@@ -40,7 +50,7 @@ const Skills: React.FC = () => {
 
         {/* Skills Grid */}
         <div className="skills-grid grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          {SKILLS.map((category, idx) => {
+          {skills.map((category, idx) => {
             const Icon = categoryIcons[category.name] || Zap;
             return (
               <motion.div
