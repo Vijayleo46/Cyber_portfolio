@@ -156,6 +156,16 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE: Experience[] = [
   {
+    role: "App Developer",
+    company: "SYSDEVCODE",
+    period: "Dec 2025 - Present",
+    details: [
+      "Joining as an App Developer to build innovative mobile and web solutions.",
+      "Specializing in application development cycles and system architecture.",
+      "Contributing to core software projects starting from December 2025.",
+    ],
+  },
+  {
     role: "AI Software Developer Intern",
     company: "AIXE Labs Private Limited",
     period: "Oct 2025 - Present",
