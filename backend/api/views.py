@@ -13,7 +13,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
 
 class ExperienceViewSet(viewsets.ModelViewSet):
-    queryset = Experience.objects.all().order_by('-id')
+    queryset = Experience.objects.all().order_by('id')
     serializer_class = ExperienceSerializer
 
 class EducationViewSet(viewsets.ModelViewSet):
