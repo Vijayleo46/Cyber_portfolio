@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# VIJAY MARTIN | Software Developer Portfolio
 
-# Run and deploy your AI Studio app
+A premium, interactive portfolio website featuring a cyber-themed laptop mockup, advanced GSAP scroll animations, and a sleek, modern aesthetic.
 
-This contains everything you need to run your app locally.
+## 🚀 Features
+- **Interactive Laptop Mockup**: A central UI hub showcasing core stats and technical specifications.
+- **Scroll-Linked Animations**: Advanced GSAP effects that bring the UI to life as you navigate.
+- **Dynamic Portrait**: Responsive profile image with background transparency and interaction states.
+- **Project Registry**: A horizontal-scrolling showcase of full-stack and AI-driven projects.
+- **Live Chat Sim**: Integrated AI/terminal-style chat interface for engagement.
 
-View your app in AI Studio: https://ai.studio/apps/temp/1
+## 🛠️ Tech Stack
+- **Frontend**: React.js 19
+- **Animations**: GSAP (ScrollTrigger), Framer Motion, Anime.js
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Build Tool**: Vite
 
-## Run Locally
+## 📦 Local Setup
+1. Clone the repository.
+2. Install dependencies: `npm install`.
+3. Run the development server: `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000).
 
-**Prerequisites:**  Node.js
+## 📄 Customization
+- **Resume**: Place your `resume.pdf` in the `/public` folder to enable the download feature.
+- **Portrait**: Replace `public/vijay.png` with your own backgroundless image.
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🌐 Deployment
+Optimized for **Render Static Sites**.
+- **Build Command**: `npm run build`
+- **Publish Directory**: `dist`

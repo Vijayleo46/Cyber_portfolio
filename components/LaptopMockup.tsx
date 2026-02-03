@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Wifi, Battery, Bell, Search, Globe, Github, Linkedin, Twitter } from "lucide-react";
+import { Wifi, Battery, Bell, Search, Globe, Github, Linkedin, Twitter, Download } from "lucide-react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const LaptopMockup: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -90,6 +93,23 @@ const LaptopMockup: React.FC = () => {
         containerRef.current?.addEventListener("mousemove", handleMouseMove);
         containerRef.current?.addEventListener("mouseleave", handleMouseLeave);
 
+        // 5. Scroll animation for portrait (linked to scroll progress)
+        gsap.fromTo(".portrait-image-inner",
+            { opacity: 0, y: 80, scale: 0.8 },
+            {
+                scrollTrigger: {
+                    trigger: ".portrait-image-inner",
+                    start: "top bottom-=100",
+                    end: "top center",
+                    scrub: 1, // Smoothly links animation progress to scroll position
+                },
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                ease: "none" // Essential for scrub animations to feel smooth
+            }
+        );
+
         return () => {
             containerRef.current?.removeEventListener("mousemove", handleMouseMove);
             containerRef.current?.removeEventListener("mouseleave", handleMouseLeave);
@@ -138,7 +158,7 @@ const LaptopMockup: React.FC = () => {
                             {/* HEADER - Precisely as reference */}
                             <div className="main-ui-element text-center mb-4 pt-2">
                                 <span className="text-[10px] md:text-[12px] font-bold text-emerald-400 uppercase tracking-[0.6em] drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">
-                                    Full Stack Developer
+                                    Software Developer
                                 </span>
                                 <h2
                                     ref={nameRef}
@@ -172,31 +192,39 @@ const LaptopMockup: React.FC = () => {
                                             <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                                             <span className="text-[8px] md:text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Tech Stack:</span>
                                         </div>
-                                        <span className="text-[10px] md:text-[12px] font-bold text-white tracking-wider">JS / REACT / NODE.JS</span>
+                                        <span className="text-[10px] md:text-[12px] font-bold text-white tracking-wider uppercase">Python / Flutter / Django</span>
                                     </div>
                                 </div>
 
                                 {/* CENTRAL PORTRAIT FRAME (Precisely as reference) */}
-                                <div className="relative flex-1 max-w-[340px] aspect-[4/5] mx-auto">
+                                <div className="relative flex-1 max-w-[340px] aspect-[4/5] mx-auto group/portrait">
                                     {/* Portrait Image Container */}
-                                    <div className="absolute inset-1 overflow-hidden z-0 bg-black">
+                                    <div className="absolute inset-1 overflow-hidden z-0">
                                         <img
                                             src="/vijay.png"
                                             alt="Vijay Martin Portrait"
-                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-[3000ms] ease-out"
+                                            className="portrait-image-inner w-full object-contain object-bottom group-hover/portrait:scale-105 group-hover/portrait:translate-y-0 transition-all duration-[2000ms] ease-out z-10 relative"
                                         />
-                                        {/* Inner Glow Gradient */}
-                                        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-emerald-500/20 to-transparent z-10" />
                                     </div>
                                 </div>
 
                                 {/* RIGHT SIDEBAR: Actions (Precisely as reference) */}
                                 <div className="main-ui-element w-56 flex flex-col items-end pr-4 text-right">
                                     {/* Available Button */}
-                                    <div className="px-6 py-3 bg-emerald-500/10 backdrop-blur-md rounded-xl border border-emerald-400/30 text-[10px] md:text-[12px] font-black text-emerald-400 uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-12 flex items-center gap-3">
+                                    <div className="px-6 py-3 bg-emerald-500/10 backdrop-blur-md rounded-xl border border-emerald-400/30 text-[10px] md:text-[12px] font-black text-emerald-400 uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-8 flex items-center gap-3">
                                         <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,1)]" />
                                         Available for Hire
                                     </div>
+
+                                    {/* Download CV Button */}
+                                    <a
+                                        href="/resume.pdf"
+                                        download
+                                        className="px-6 py-3 bg-emerald-500 text-black rounded-xl text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] hover:bg-emerald-400 transition-all flex items-center gap-3 mb-10 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-105"
+                                    >
+                                        <Download className="w-3 h-3" />
+                                        Get_Resume.sys
+                                    </a>
 
                                     {/* CTA Text */}
                                     <div className="mb-12">

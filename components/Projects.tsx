@@ -111,10 +111,6 @@ const Projects: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-emerald-900/40 mix-blend-overlay opacity-0 group-hover/card:opacity-100 transition-opacity" />
 
-                    {/* HUD Label */}
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-emerald-500/30 text-[10px] text-emerald-400 font-mono tracking-tighter">
-                      v2.4.0
-                    </div>
                   </div>
 
                   {/* Project Content */}

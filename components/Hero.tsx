@@ -81,7 +81,7 @@ const Hero: React.FC = () => {
                     className="relative mb-6"
                 >
                     <span className="text-xs md:text-sm font-bold text-emerald-500/60 uppercase tracking-[0.8em]">
-                        Full Stack Developer
+                        Software Developer
                     </span>
                     <div className="absolute -inset-x-4 h-[1px] bottom-0 bg-emerald-500/20" />
                 </motion.div>

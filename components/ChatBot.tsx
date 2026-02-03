@@ -110,8 +110,8 @@ const ChatBot: React.FC = () => {
                   </div>
                   <div
                     className={`max-w-[85%] p-4 rounded-3xl text-xs md:text-sm font-mono border transition-all duration-300 ${msg.role === 'user'
-                        ? 'bg-emerald-500/5 text-emerald-100 border-emerald-500/10 rounded-tr-none'
-                        : 'bg-white/[0.02] text-emerald-400 border-white/5 rounded-tl-none group hover:border-emerald-500/20'
+                      ? 'bg-emerald-500/5 text-emerald-100 border-emerald-500/10 rounded-tr-none'
+                      : 'bg-white/[0.02] text-emerald-400 border-white/5 rounded-tl-none group hover:border-emerald-500/20'
                       }`}
                   >
                     <span className="opacity-40 mr-2">{msg.role === 'user' ? '>' : '#'}</span>
