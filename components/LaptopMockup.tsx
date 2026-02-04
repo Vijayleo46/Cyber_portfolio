@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { Wifi, Battery, Bell, Search, Globe, Github, Linkedin, Twitter, Download } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { portfolioApi } from "../api";
-import { ContactInfo, Project } from "../types";
+import type { ContactInfo, Project } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import LaptopMockup from "./LaptopMockup";
 import { portfolioApi } from "../api";
-import { ContactInfo } from "../types";
+import type { ContactInfo } from "../types";
 
 const Hero: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { portfolioApi } from '../api';
-import { Project } from '../types';
+import type { Project } from '../types';
 import { ExternalLink, Github, Rocket, Zap, Code2, Cpu, Globe, Terminal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { portfolioApi } from "../api";
-import { SkillCategory } from "../types";
+import type { SkillCategory } from "../types";
 import LaptopMockup from "./LaptopMockup";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -105,7 +105,7 @@ const Skills: React.FC = () => {
                       <div className="w-12 h-0.5 bg-emerald-900/40 mt-2 overflow-hidden rounded-full">
                         <motion.div
                           initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
+                          whileInView={{ width: `${skill.level}% ` }}
                           className="h-full bg-emerald-500/60"
                         />
                       </div>
@@ -121,14 +121,14 @@ const Skills: React.FC = () => {
 
       <style>
         {`
-                    @keyframes scan {
-                        0% { top: 0; opacity: 1; }
-                        100% { top: 100%; opacity: 0; }
-                    }
-                    .animate-scan {
-                        animation: scan 2s linear infinite;
-                    }
-                `}
+@keyframes scan {
+  0 % { top: 0; opacity: 1; }
+  100 % { top: 100 %; opacity: 0; }
+}
+                    .animate - scan {
+  animation: scan 2s linear infinite;
+}
+`}
       </style>
     </section>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { portfolioApi } from '../api';
-import { ContactInfo } from '../types';
+import type { ContactInfo } from '../types';
 import { Mail, Github, Linkedin, MapPin, Terminal, Cpu, Globe, ArrowUpRight, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 

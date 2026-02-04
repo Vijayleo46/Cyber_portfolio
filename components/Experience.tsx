@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { portfolioApi } from '../api';
-import { Experience as ExperienceType } from '../types';
+import type { Experience as ExperienceType } from '../types';
 import {
   Terminal,
   Calendar,
