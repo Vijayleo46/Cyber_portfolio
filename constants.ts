@@ -1,5 +1,5 @@
 
-import { Project, Experience, Education, SkillCategory, ContactInfo } from './types.ts';
+import type { Project, Experience, Education, SkillCategory, ContactInfo } from './types.ts';
 
 export const CONTACT_INFO: ContactInfo = {
   phone: "+91 7736472576",
