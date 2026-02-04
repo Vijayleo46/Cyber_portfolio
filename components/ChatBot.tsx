@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, Bot, Terminal, Shield, Cpu, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { portfolioApi } from '../api';
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,15 +34,23 @@ const ChatBot: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    // Simulated response for now (since we don't have the API key in this environment)
-    setTimeout(() => {
+    try {
+      const response = await portfolioApi.sendMessageToChatbot(userMessage);
+
       setMessages(prev => [...prev, {
         role: 'model',
-        text: `LOG_ERROR: AI_MODULE_OFFLINE. Please consult manual archives or establish direct link via 'Initialize_Contact'.`,
+        text: response.text,
+        timestamp: new Date(response.timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' })
+      }]);
+    } catch (error: any) {
+      setMessages(prev => [...prev, {
+        role: 'model',
+        text: `LOG_ERROR: AI_MODULE_OFFLINE. ${error.response?.data?.error || error.message}. Please consult manual archives or establish direct link via 'Initialize_Contact'.`,
         timestamp: now
       }]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (

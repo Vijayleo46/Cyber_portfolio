@@ -60,3 +60,25 @@ class ContactInfo(models.Model):
 
     def __str__(self):
         return self.email
+
+class ChatMessage(models.Model):
+    ROLE_CHOICES = [
+        ('user', 'User'),
+        ('model', 'AI'),
+    ]
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    text = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.role}: {self.text[:50]}"
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200, blank=True)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name}: {self.subject or 'No Subject'}"

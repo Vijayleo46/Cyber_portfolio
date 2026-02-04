@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
             </div>
 
             <a
-              href="#contact"
+              href="#contact-form"
               className="group relative px-8 py-2.5 bg-emerald-500 text-black font-black text-[11px] uppercase tracking-[0.2em] rounded-sm overflow-hidden transition-all hover:bg-white hover:scale-105"
             >
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />

@@ -12,6 +12,8 @@ export const portfolioApi = {
     getExperience: () => api.get<Experience[]>(`/experience/`).then(res => res.data),
     getEducation: () => api.get<Education[]>(`/education/`).then(res => res.data),
     getSkills: () => api.get<SkillCategory[]>(`/skills/`).then(res => res.data),
+    sendMessageToChatbot: (text: string) => api.post(`/chatbot/`, { text }).then(res => res.data),
+    sendContactMessage: (data: { name: string; email: string; subject?: string; message: string }) => api.post(`/contact-message/`, data).then(res => res.data),
     getContact: () => api.get<ContactInfo[]>(`/contact/`).then(res => res.data[0]),
 };
 

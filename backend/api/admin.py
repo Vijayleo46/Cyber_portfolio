@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import Project, Experience, Education, Skill, SkillCategory, ContactInfo
+from .models import Project, Experience, Education, Skill, SkillCategory, ContactInfo, ChatMessage, ContactMessage
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'timestamp')
+
+@admin.register(ChatMessage)
+class ChatMessageAdmin(admin.ModelAdmin):
+    list_display = ('role', 'timestamp')
+    list_filter = ('role',)
+
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):

@@ -5,7 +5,9 @@ from .views import (
     ExperienceViewSet, 
     EducationViewSet, 
     SkillCategoryViewSet, 
-    ContactInfoViewSet
+    ContactInfoViewSet,
+    ChatBotView,
+    ContactMessageView
 )
 
 router = DefaultRouter()
@@ -17,4 +19,6 @@ router.register(r'contact', ContactInfoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('chatbot/', ChatBotView.as_view(), name='chatbot'),
+    path('contact-message/', ContactMessageView.as_view(), name='contact-message'),
 ]

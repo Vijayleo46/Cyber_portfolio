@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Experience, Education, Skill, SkillCategory, ContactInfo
+from .models import Project, Experience, Education, Skill, SkillCategory, ContactInfo, ChatMessage, ContactMessage
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,4 +30,14 @@ class SkillCategorySerializer(serializers.ModelSerializer):
 class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactInfo
+        fields = '__all__'
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        fields = ['role', 'text', 'timestamp']
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
         fields = '__all__'

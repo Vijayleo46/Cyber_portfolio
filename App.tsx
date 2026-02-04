@@ -7,6 +7,7 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
+import Contact from './components/Contact';
 
 function App() {
 
@@ -113,6 +114,8 @@ function App() {
       <Skills />
       <Experience />
       <Projects />
+
+      <Contact />
       <Footer />
       <ChatBot />
 
