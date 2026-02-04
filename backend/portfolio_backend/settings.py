@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True # Narrow this down for production
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.render.com",
+    "https://*.onrender.com",
     "http://localhost:3000",
 ]
 
