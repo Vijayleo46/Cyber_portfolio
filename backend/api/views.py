@@ -21,20 +21,27 @@ def api_root(request):
     """
     Welcome to Vijay Martin's Portfolio API
     """
+    base_url = request.build_absolute_uri('/')
     return Response({
-        'message': 'Welcome to Vijay Martin\'s Portfolio API',
-        'version': '1.0',
-        'endpoints': {
-            'projects': '/api/projects/',
-            'skills': '/api/skills/',
-            'experience': '/api/experience/',
-            'education': '/api/education/',
-            'contact_info': '/api/contact-info/',
-            'chatbot': '/api/chatbot/',
-            'contact_messages': '/api/contact-messages/',
-            'admin': '/admin/',
+        'title': 'Vijay Martin - Portfolio API',
+        'description': 'RESTful API for portfolio website showcasing projects, skills, experience, and education',
+        'version': '1.0.0',
+        'developer': {
+            'name': 'Vijay Martin',
+            'role': 'Software Developer',
         },
-        'documentation': 'Visit /api/ for API endpoints'
+        'api_endpoints': {
+            'Projects': f'{base_url}api/projects/',
+            'Skills': f'{base_url}api/skills/',
+            'Experience': f'{base_url}api/experience/',
+            'Education': f'{base_url}api/education/',
+            'Contact Info': f'{base_url}api/contact-info/',
+            'ChatBot': f'{base_url}api/chatbot/',
+            'Contact Messages': f'{base_url}api/contact-messages/',
+        },
+        'admin_panel': f'{base_url}admin/',
+        'status': 'operational',
+        'database': 'PostgreSQL (Production)',
     })
 
 
