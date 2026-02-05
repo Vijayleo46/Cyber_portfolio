@@ -1,11 +1,17 @@
 import axios from 'axios';
 import type { Project, Experience, Education, SkillCategory, ContactInfo } from './types.ts';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+
+// If in production and API_BASE_URL doesn't end with /api, append it
+if (import.meta.env.PROD && API_BASE_URL && !API_BASE_URL.endsWith('/api') && !API_BASE_URL.endsWith('/api/')) {
+    API_BASE_URL = API_BASE_URL.replace(/\/$/, '') + '/api';
+}
 
 const api = axios.create({
     baseURL: API_BASE_URL,
 });
+
 
 export const portfolioApi = {
     getProjects: () => api.get<Project[]>(`/projects/`).then(res => res.data),
