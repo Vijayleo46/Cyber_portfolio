@@ -2,9 +2,13 @@ from rest_framework import serializers
 from .models import Project, Experience, Education, Skill, SkillCategory, ContactInfo, ChatMessage, ContactMessage
 
 class ProjectSerializer(serializers.ModelSerializer):
+    demoUrl = serializers.URLField(source='demo_url', allow_blank=True, allow_null=True)
+    githubUrl = serializers.URLField(source='github_url', allow_blank=True, allow_null=True)
+
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'image', 'demoUrl', 'githubUrl', 'technologies', 'features']
+
 
 class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
