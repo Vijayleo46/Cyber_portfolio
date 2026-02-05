@@ -4,8 +4,8 @@ services:
     name: portfolio-backend
     env: python
     rootDir: backend
-    buildCommand: ./build.sh
-    startCommand: python -m gunicorn portfolio_backend.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: bash build.sh
+    startCommand: gunicorn portfolio_backend.wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.13
