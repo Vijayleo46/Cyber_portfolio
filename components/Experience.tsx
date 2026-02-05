@@ -32,26 +32,26 @@ const Experience: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
 
         {/* HUD Header */}
-        <div className="mb-20">
+        <div className="mb-12 md:mb-20">
           <div className="flex items-center gap-3 mb-2">
             <Database size={16} className="text-emerald-500/60" />
-            <span className="text-emerald-500/40 font-mono text-xs tracking-[0.4em] uppercase">
+            <span className="text-emerald-500/40 font-mono text-[10px] md:text-xs tracking-[0.4em] uppercase">
               Core_System.Deployment_History
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter">
             CAREER <span className="text-transparent bg-clip-text bg-emerald-400" style={{ WebkitTextStroke: '1px rgba(16,185,129,0.5)' }}>LOGS</span>
           </h2>
         </div>
 
         {/* Experience Stream */}
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
           {experience.map((exp, idx) => {
             const isLast = idx === experience.length - 1;
             return (
               <motion.div
                 key={idx}
-                className="relative group pb-12"
+                className="relative group pb-8 md:pb-12"
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
                 initial={{ opacity: 0, x: -20 }}
@@ -61,44 +61,45 @@ const Experience: React.FC = () => {
               >
                 {/* Connection Line */}
                 {!isLast && (
-                  <div className="absolute left-[31px] top-[70px] bottom-0 w-px bg-emerald-500/10 group-hover:bg-emerald-500/30 transition-colors" />
+                  <div className="absolute left-[23px] md:left-[31px] top-[50px] md:top-[70px] bottom-0 w-px bg-emerald-500/10 group-hover:bg-emerald-500/30 transition-colors" />
                 )}
 
-                <div className="flex gap-8">
+                <div className="flex gap-4 md:gap-8">
                   {/* Status Indicator */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-2xl bg-black/40 border border-emerald-500/20 flex items-center justify-center group-hover:border-emerald-500 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-500">
+                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-black/40 border border-emerald-500/20 flex items-center justify-center group-hover:border-emerald-500 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-500">
                       {idx === 0 ? (
-                        <Zap size={24} className="text-emerald-400 animate-pulse" />
+                        <Zap size={20} className="text-emerald-400 animate-pulse md:w-6 md:h-6" />
                       ) : (
-                        <Shield size={20} className="text-emerald-500/40" />
+                        <Shield size={16} className="text-emerald-500/40 md:w-5 md:h-5" />
                       )}
                     </div>
                   </div>
 
                   {/* Log Content */}
                   <div className="flex-1">
-                    <div className="bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-3xl p-8 group-hover:border-emerald-500/20 transition-all duration-500 relative">
+                    <div className="bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-2xl md:rounded-3xl p-5 md:p-8 group-hover:border-emerald-500/20 transition-all duration-500 relative">
 
                       {/* Brackets */}
-                      <div className="absolute top-4 right-4 text-[10px] font-mono text-emerald-500/20">
+                      <div className="absolute top-4 right-4 text-[8px] md:text-[10px] font-mono text-emerald-500/20">
                         LOG_ID: #00{idx + 1}
                       </div>
 
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                         <div>
-                          <h3 className="text-2xl font-bold text-white uppercase tracking-tighter group-hover:text-emerald-400 transition-colors">
+                          <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-tighter group-hover:text-emerald-400 transition-colors">
                             {exp.role}
                           </h3>
-                          <div className="flex items-center gap-2 mt-1 text-emerald-500/60 font-mono text-xs uppercase">
+                          <div className="flex items-center gap-2 mt-1 text-emerald-500/60 font-mono text-[10px] md:text-xs uppercase">
                             <Building size={12} />
                             <span>{exp.company}</span>
                           </div>
                         </div>
-                        <div className="px-4 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/10 text-[10px] font-mono text-emerald-500/60 uppercase">
+                        <div className="inline-block md:block self-start px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/10 text-[9px] md:text-[10px] font-mono text-emerald-500/60 uppercase">
                           {exp.period}
                         </div>
                       </div>
+
 
                       {/* Impact Details */}
                       <div className="space-y-4">

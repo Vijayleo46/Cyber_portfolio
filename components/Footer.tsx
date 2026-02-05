@@ -44,15 +44,15 @@ const Footer: React.FC = () => {
               </span>
             </div>
 
-            <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
+            <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
               INITIALIZE<br />
               <span className="text-transparent bg-clip-text bg-emerald-400" style={{ WebkitTextStroke: '1px rgba(16,185,129,0.5)' }}>COLLABORATION</span>
             </h2>
 
             <p className="text-emerald-50/40 font-mono text-sm max-w-md leading-relaxed">
-              Currently available for new deployments, architectural consultations,
-              and high-scale software engineering. Establish a secure link below.
+              Available for new deployments and architectural consultations.
             </p>
+
 
             <div className="flex flex-wrap gap-4 pt-4">
               <motion.a

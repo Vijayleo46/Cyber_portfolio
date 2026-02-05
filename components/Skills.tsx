@@ -36,20 +36,20 @@ const Skills: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
 
         {/* HUD Section Header */}
-        <div className="mb-20">
+        <div className="mb-12 md:mb-20">
           <div className="flex items-center gap-4 mb-2">
-            <div className="h-px w-12 bg-emerald-500/50" />
-            <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase opacity-70">
+            <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
+            <span className="text-emerald-500 font-mono text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase opacity-70">
               System_Core.Modules
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter">
             TECH <span className="text-transparent bg-clip-text bg-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]" style={{ WebkitTextStroke: '1px rgba(16,185,129,0.5)' }}>ARSENAL</span>
           </h2>
         </div>
 
         {/* Skills Grid */}
-        <div className="skills-grid grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        <div className="skills-grid grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-7xl mx-auto">
           {skills.map((category, idx) => {
             const Icon = categoryIcons[category.name] || Zap;
             return (
@@ -59,7 +59,7 @@ const Skills: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                className="skill-category-card group relative bg-black/40 backdrop-blur-xl border border-emerald-500/10 rounded-2xl p-8 hover:border-emerald-500/40 transition-all duration-500"
+                className="skill-category-card group relative bg-black/40 backdrop-blur-xl border border-emerald-500/10 rounded-2xl p-5 md:p-8 hover:border-emerald-500/40 transition-all duration-500"
               >
                 {/* Corners Brackets */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-emerald-500/30 rounded-tl-lg group-hover:border-emerald-500 transition-colors" />
@@ -70,16 +70,17 @@ const Skills: React.FC = () => {
                 {/* Scanline Effect on Hover */}
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 group-hover:animate-scan z-20" />
 
-                <div className="flex items-center gap-4 mb-10 pb-4 border-b border-emerald-500/10">
-                  <div className="p-3 bg-emerald-500/10 rounded-lg text-emerald-400">
-                    <Icon size={24} />
+                <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-10 pb-4 border-b border-emerald-500/10">
+                  <div className="p-2 md:p-3 bg-emerald-500/10 rounded-lg text-emerald-400">
+                    <Icon size={20} className="md:w-6 md:h-6" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white uppercase tracking-widest">
+                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-widest">
                     {category.name.replace(' & ', '_')}
                   </h3>
                   <div className="flex-1" />
-                  <span className="text-[10px] font-mono text-emerald-500/40">ID_0{idx + 1}</span>
+                  <span className="text-[9px] md:text-[10px] font-mono text-emerald-500/40">ID_0{idx + 1}</span>
                 </div>
+
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                   {category.skills.map((skill) => (

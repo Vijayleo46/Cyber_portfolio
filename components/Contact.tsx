@@ -31,16 +31,17 @@ const Contact: React.FC = () => {
         <section id="contact-form" className="py-20 relative px-6">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-10">
+                <div className="flex items-center gap-3 mb-6 md:mb-10">
                     <Terminal size={18} className="text-emerald-500" />
-                    <span className="text-emerald-500/60 font-mono text-xs tracking-widest uppercase">
+                    <span className="text-emerald-500/60 font-mono text-[10px] md:text-xs tracking-[0.2em] md:tracking-widest uppercase">
                         Secure_Transmission.Protocol
                     </span>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-12 bg-white/[0.02] border border-emerald-500/10 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 bg-white/[0.02] border border-emerald-500/10 rounded-2xl md:rounded-3xl p-6 md:p-12 relative overflow-hidden">
                     {/* Decorative Elements */}
-                    <div className="absolute top-0 right-0 p-4 opacity-20">
+                    <div className="absolute top-0 right-0 p-3 md:p-4 opacity-20">
+
                         <div className="flex gap-2">
                             <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
