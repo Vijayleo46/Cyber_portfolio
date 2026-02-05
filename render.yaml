@@ -19,6 +19,9 @@ services:
         fromDatabase:
           name: portfolio-db
           property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+
 
   # Frontend Service (React/Vite)
   - type: static

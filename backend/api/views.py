@@ -59,11 +59,11 @@ class ChatBotView(APIView):
         ChatMessage.objects.create(role='user', text=user_text)
 
         try:
-            # Configure SambaNova client
+            # Configure OpenAI client
             client = openai.OpenAI(
-                api_key=os.environ.get("SAMBANOVA_API_KEY"),
-                base_url="https://api.sambanova.ai/v1",
+                api_key=os.environ.get("OPENAI_API_KEY"),
             )
+
 
             # Prepare context from portfolio data
             context = "You are an AI assistant for Vijay Martin's portfolio. "
@@ -75,16 +75,16 @@ class ChatBotView(APIView):
                 context += "His projects include: " + ", ".join([p.title for p in projects]) + ". "
             
             response = client.chat.completions.create(
-                model="Meta-Llama-3.1-8B-Instruct",
+                model="gpt-3.5-turbo", # Or use "gpt-4"
                 messages=[
                     {"role": "system", "content": context},
                     {"role": "user", "content": user_text}
                 ],
-                temperature=0.1,
-                top_p=0.1
+                temperature=0.7,
             )
             
             ai_text = response.choices[0].message.content
+
 
             # Save AI response
             ChatMessage.objects.create(role='model', text=ai_text)
