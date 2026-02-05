@@ -58,12 +58,15 @@ class ChatBotView(APIView):
         # Save user message
         ChatMessage.objects.create(role='user', text=user_text)
 
+        # Check for API key
+        if not os.environ.get("OPENAI_API_KEY"):
+            return Response({"error": "OPENAI_API_KEY not set in Render environment"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         try:
             # Configure OpenAI client
             client = openai.OpenAI(
                 api_key=os.environ.get("OPENAI_API_KEY"),
             )
-
 
             # Prepare context from portfolio data
             context = "You are an AI assistant for Vijay Martin's portfolio. "
@@ -75,7 +78,7 @@ class ChatBotView(APIView):
                 context += "His projects include: " + ", ".join([p.title for p in projects]) + ". "
             
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo", # Or use "gpt-4"
+                model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": context},
                     {"role": "user", "content": user_text}
@@ -84,7 +87,6 @@ class ChatBotView(APIView):
             )
             
             ai_text = response.choices[0].message.content
-
 
             # Save AI response
             ChatMessage.objects.create(role='model', text=ai_text)
@@ -96,6 +98,7 @@ class ChatBotView(APIView):
             })
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
