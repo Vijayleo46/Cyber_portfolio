@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -85,11 +86,13 @@ WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Use PostgreSQL in production (via DATABASE_URL), SQLite in development
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -134,11 +137,18 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True # Narrow this down for production
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in development, restrict in production
+
+# In production, specify allowed origins
+if not DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        "https://portfolio-frontend.onrender.com",  # Update with your actual Render frontend URL
+    ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
