@@ -102,11 +102,11 @@ const Hero: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                     transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                    className="relative group mb-12 flex flex-col items-center"
+                    className="relative group mb-8 md:mb-12 flex flex-col items-center"
                 >
                     <div className="flex flex-col items-center">
                         <h1
-                            className="text-7xl md:text-[12rem] font-black text-white leading-none tracking-tighter uppercase relative z-10"
+                            className="text-5xl sm:text-7xl md:text-[12rem] font-black text-white leading-none tracking-tighter uppercase relative z-10"
                             style={{
                                 textShadow: "0 0 50px rgba(16,185,129,0.2)",
                                 background: "linear-gradient(to bottom, #fff 50%, #d1d5db 100%)",
@@ -117,7 +117,7 @@ const Hero: React.FC = () => {
                             {nameParts[0]}
                         </h1>
                         <h1
-                            className="text-7xl md:text-[10rem] font-black text-white leading-none tracking-tighter uppercase relative z-10 -mt-4 md:-mt-8"
+                            className="text-5xl sm:text-7xl md:text-[10rem] font-black text-white leading-none tracking-tighter uppercase relative z-10 -mt-2 md:-mt-8"
                             style={{
                                 textShadow: "0 0 50px rgba(16,185,129,0.2)",
                                 background: "linear-gradient(to right, #fbbf24, #f472b6)",
@@ -131,16 +131,17 @@ const Hero: React.FC = () => {
 
                     {/* Retro Ghosting Effect behind H1 */}
                     <div className="absolute inset-0 -z-10 translate-x-2 translate-y-2 opacity-5 blur-[2px] pointer-events-none flex flex-col items-center">
-                        <span className="text-7xl md:text-[12rem] font-black text-emerald-500 tracking-tighter uppercase">{nameParts[0]}</span>
-                        <span className="text-7xl md:text-[10rem] font-black text-emerald-500 tracking-tighter uppercase -mt-4 md:-mt-8">{nameParts.slice(1).join(' ')}</span>
+                        <span className="text-5xl sm:text-7xl md:text-[12rem] font-black text-emerald-50 tracking-tighter uppercase">{nameParts[0]}</span>
+                        <span className="text-5xl sm:text-7xl md:text-[10rem] font-black text-emerald-50 tracking-tighter uppercase -mt-2 md:-mt-8">{nameParts.slice(1).join(' ')}</span>
                     </div>
 
                     {/* Technical Crosshairs around name */}
-                    <div className="absolute -top-10 -left-10 w-4 h-4 border-t-2 border-l-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <div className="absolute -top-10 -right-10 w-4 h-4 border-t-2 border-r-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <div className="absolute -bottom-10 -left-10 w-4 h-4 border-b-2 border-l-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <div className="absolute -bottom-10 -right-10 w-4 h-4 border-b-2 border-r-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -top-10 -left-10 w-4 h-4 border-t-2 border-l-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden md:block" />
+                    <div className="absolute -top-10 -right-10 w-4 h-4 border-t-2 border-r-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden md:block" />
+                    <div className="absolute -bottom-10 -left-10 w-4 h-4 border-b-2 border-l-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden md:block" />
+                    <div className="absolute -bottom-10 -right-10 w-4 h-4 border-b-2 border-r-2 border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden md:block" />
                 </motion.div>
+
 
                 {/* Central Laptop Mockup Container */}
                 <motion.div

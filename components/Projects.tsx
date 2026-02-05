@@ -99,7 +99,8 @@ const Projects: React.FC = () => {
             {projects.map((project, idx) => (
               <motion.div
                 key={idx}
-                className="flex-shrink-0 w-[400px] snap-center group/card"
+                className="flex-shrink-0 w-[85vw] md:w-[400px] snap-center group/card"
+
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}

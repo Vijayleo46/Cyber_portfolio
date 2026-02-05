@@ -137,10 +137,11 @@ const LaptopMockup: React.FC = () => {
                 {/* Screen/Display */}
                 <div className="relative aspect-[16/10] bg-[#020202] rounded-t-xl overflow-hidden shadow-inner">
                     {/* Top Notch */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-black rounded-b-xl z-50 flex items-center justify-center gap-3">
-                        <div className="w-1 h-1 rounded-full bg-[#111]" />
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/20 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 md:w-40 h-4 md:h-6 bg-black rounded-b-xl z-50 flex items-center justify-center gap-3">
+                        <div className="w-0.5 md:w-1 h-0.5 md:h-1 rounded-full bg-[#111]" />
+                        <div className="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-emerald-500/20 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
                     </div>
+
 
                     {/* Screen Content */}
                     <div className="screen-content absolute inset-0 flex flex-col bg-[#050505] overflow-hidden">
@@ -170,13 +171,13 @@ const LaptopMockup: React.FC = () => {
                         <div ref={contentRef} className="flex-1 flex flex-col p-6 md:p-10 relative z-10">
 
                             {/* HEADER - Precisely as reference */}
-                            <div className="main-ui-element text-center mb-4 pt-2">
-                                <span className="text-[10px] md:text-[12px] font-bold text-emerald-400 uppercase tracking-[0.6em] drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">
+                            <div className="main-ui-element text-center mb-4 md:mb-4 pt-2">
+                                <span className="text-[8px] md:text-[12px] font-bold text-emerald-400 uppercase tracking-[0.4em] md:tracking-[0.6em] drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">
                                     {profile?.job_title || "Software Developer"}
                                 </span>
                                 <h2
                                     ref={nameRef}
-                                    className="text-7xl md:text-8xl lg:text-9xl font-black text-white leading-none tracking-tighter mt-2"
+                                    className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white leading-none tracking-tighter mt-2"
                                     style={{
                                         fontFamily: "'Space Grotesk', sans-serif",
                                         background: "linear-gradient(to bottom, #fff 40%, #a1a1aa 100%)",
@@ -189,11 +190,12 @@ const LaptopMockup: React.FC = () => {
                                 </h2>
                             </div>
 
+
                             {/* Center Section: Portrait + Sidebar Stats */}
                             <div className="flex-1 flex items-center justify-between gap-4 mt-2">
 
                                 {/* LEFT SIDEBAR: Stats (Precisely as reference) */}
-                                <div className="main-ui-element w-48 space-y-10 pl-4">
+                                <div className="main-ui-element w-48 space-y-10 pl-4 hidden md:block">
                                     <div className="flex flex-col gap-1 border-l-2 border-emerald-500/20 pl-4">
                                         <div className="flex items-center gap-2">
                                             <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
@@ -210,8 +212,9 @@ const LaptopMockup: React.FC = () => {
                                     </div>
                                 </div>
 
+
                                 {/* CENTRAL PORTRAIT FRAME (Precisely as reference) */}
-                                <div className="relative flex-1 max-w-[340px] aspect-[4/5] mx-auto group/portrait">
+                                <div className="relative flex-1 max-w-[280px] md:max-w-[340px] aspect-[4/5] mx-auto group/portrait">
                                     {/* Portrait Image Container */}
                                     <div className="absolute inset-1 overflow-hidden z-0">
                                         <img
@@ -222,8 +225,9 @@ const LaptopMockup: React.FC = () => {
                                     </div>
                                 </div>
 
+
                                 {/* RIGHT SIDEBAR: Actions (Precisely as reference) */}
-                                <div className="main-ui-element w-56 flex flex-col items-end pr-4 text-right">
+                                <div className="main-ui-element w-56 flex flex-col items-end pr-4 text-right hidden lg:flex">
                                     {/* Available Button */}
                                     <div className="px-6 py-3 bg-emerald-500/10 backdrop-blur-md rounded-xl border border-emerald-400/30 text-[10px] md:text-[12px] font-black text-emerald-400 uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-8 flex items-center gap-3">
                                         <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,1)]" />
@@ -269,24 +273,26 @@ const LaptopMockup: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             {/* BOTTOM CONTACT INFO (Precisely as reference) */}
                             <div className="main-ui-element flex justify-between items-end mt-auto pb-4 px-2">
-                                <div className="flex items-center gap-8">
-                                    <div className="flex items-center gap-3 group cursor-pointer">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
-                                            <Search className="w-4 h-4 text-emerald-500/60" />
+                                <div className="flex items-center gap-4 md:gap-8">
+                                    <div className="flex items-center gap-2 md:gap-3 group cursor-pointer">
+                                        <div className="w-6 md:w-8 h-6 md:h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
+                                            <Search className="w-3 md:w-4 h-3 md:h-4 text-emerald-500/60" />
                                         </div>
-                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.email || "vijaymartin72@gmail.com"}</span>
+                                        <span className="text-[8px] md:text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.email || "vijaymartin72@gmail.com"}</span>
                                     </div>
-                                    <div className="flex items-center gap-3 group cursor-pointer">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
-                                            <Wifi className="w-4 h-4 text-emerald-500/60" />
+                                    <div className="flex items-center gap-2 md:gap-3 group cursor-pointer hidden sm:flex">
+                                        <div className="w-6 md:w-8 h-6 md:h-8 rounded-lg bg-emerald-500/5 border border-white/5 flex items-center justify-center group-hover:border-emerald-500/40 transition-all">
+                                            <Wifi className="w-3 md:w-4 h-3 md:h-4 text-emerald-500/60" />
                                         </div>
-                                        <span className="text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.phone || "+91 773 647 2576"}</span>
+                                        <span className="text-[8px] md:text-[10px] font-mono text-white/60 group-hover:text-white transition-colors">{profile?.phone || "+91 773 647 2576"}</span>
                                     </div>
                                 </div>
+
                                 <div className="flex flex-col items-end gap-1">
                                     <div className="w-12 h-[2px] bg-emerald-500/30" />
                                     <span className="text-[8px] font-mono text-emerald-500/40 uppercase tracking-[0.4em]">system_v_martin</span>
