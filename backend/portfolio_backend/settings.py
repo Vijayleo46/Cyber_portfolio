@@ -137,13 +137,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in development, restrict in production
+CORS_ALLOW_ALL_ORIGINS = True  # Always allow for now to ensure frontend can connect
+# CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in development, restrict in production
 
 # In production, specify allowed origins
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://portfolio-frontend.onrender.com",  # Update with your actual Render frontend URL
+        "https://cyber-portfolio.onrender.com",
+        "https://api-cyber-portfolio.onrender.com",
     ]
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
