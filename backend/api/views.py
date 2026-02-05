@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from .models import Project, Experience, Education, SkillCategory, ContactInfo, ChatMessage, ContactMessage
 from .serializers import (
     ProjectSerializer, 
@@ -14,6 +15,28 @@ from .serializers import (
     ChatMessageSerializer,
     ContactMessageSerializer
 )
+
+@api_view(['GET'])
+def api_root(request):
+    """
+    Welcome to Vijay Martin's Portfolio API
+    """
+    return Response({
+        'message': 'Welcome to Vijay Martin\'s Portfolio API',
+        'version': '1.0',
+        'endpoints': {
+            'projects': '/api/projects/',
+            'skills': '/api/skills/',
+            'experience': '/api/experience/',
+            'education': '/api/education/',
+            'contact_info': '/api/contact-info/',
+            'chatbot': '/api/chatbot/',
+            'contact_messages': '/api/contact-messages/',
+            'admin': '/admin/',
+        },
+        'documentation': 'Visit /api/ for API endpoints'
+    })
+
 
 class ContactMessageView(generics.CreateAPIView):
     queryset = ContactMessage.objects.all()
